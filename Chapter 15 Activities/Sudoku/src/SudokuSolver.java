@@ -37,7 +37,7 @@ public class SudokuSolver {
 
         // create the list of sets for each row (this.rows)
         // ...
-
+        Set <String> hashcols = new HashSet<>();
         // create the list of sets for each col (this.cols)
         // ...
 
@@ -47,9 +47,14 @@ public class SudokuSolver {
             3 4 5
             6 7 8
          */
-        // ...
 
+         Set<String> 
+        // ...
+        Set <String> hashrows = new HashSet<>();
         // create a hash set for [1..9] (this.nums)
+
+        Set <String> hasnums = new HashSet<>();
+
         // ...
 
         // visually inspect that all the sets are correct
