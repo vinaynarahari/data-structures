@@ -130,8 +130,8 @@ public class SudokuSolver {
          */
         int grid = -1;
 
-        Set<Integer> possibleNums = new HashSet<Integer>();
-        possibleNums.addAll(this.nums);
+        Set<Integer> possibleNums = new HashSet<Integer>(this.nums);
+        
         
         possibleNums.removeAll(this.rows.get(nextRow)); 
         possibleNums.removeAll(this.cols.get(nextCol));
