@@ -88,10 +88,10 @@ public class SudokuSolver {
 
         // visually inspect that all the sets are correct
         for (int row = 0; row < N; row++) {
-            System.out.println(this.rows.get(row) + "- Rows: " + row);
+            System.out.println(this.rows.get(row) + "- Row: " + row);
         }
         for (int col = 0; col < N; col++) {
-            System.out.println(this.rows.get(col) + "-  Cols: " + col);
+            System.out.println(this.rows.get(col) + "-  Column: " + col);
         }
         for (int square = 0; square < N; square++) {
             System.out.println(this.rows.get(square) + "- Square: " + square);
