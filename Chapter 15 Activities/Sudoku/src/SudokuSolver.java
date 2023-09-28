@@ -128,7 +128,7 @@ public class SudokuSolver {
             Properly indexing the squares list of sets is tricky. Verify that your
             algorithm is correct.
          */
-        int grid = -1;
+        int grid = 0;
 
         Set<Integer> possibleNums = new HashSet<Integer>(this.nums);
         
