@@ -19,7 +19,7 @@ public class StackDemo
         commands.push("Insert: '?'");
         commands.push("Delete: '?'");
         commands.push("Insert:'!'");
-
+        
         // print the stack; the top of the stack is the far right
         System.out.println(commands);
 
