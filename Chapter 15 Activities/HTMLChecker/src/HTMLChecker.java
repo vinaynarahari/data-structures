@@ -18,11 +18,15 @@ public class HTMLChecker
     public static void main(String[] args)
     {
         String filename = "src/TagSample1.html";
-
+        Stack<String> tags = new Stack<>();
         try (Scanner in = new Scanner(new File(filename)))
         {
             // Your code goes here
-            . . .
+            while (in.hasNext()) {
+                tags.push(in.next());
+            }
+            
+
 
 
         } catch (FileNotFoundException e)
