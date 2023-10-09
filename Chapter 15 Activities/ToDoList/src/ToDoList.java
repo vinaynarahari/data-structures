@@ -65,7 +65,7 @@ public class ToDoList
         // Complete this method
         String num = optionStr.substring(0, 1);
         int x = Integer.parseInt(num);
-        Task task = new Task(x,optionStr.substring(1, optionStr.length());
+        Task task = new Task(x,optionStr.substring(1, optionStr.length()));
         toDo.add(task);
             
             
@@ -80,7 +80,11 @@ public class ToDoList
         Task next = null;
         
         // Complete this method
-        
+        if(!toDo.isEmpty()){
+            next = toDo.remove();
+        }else{
+            next = null;
+        }
         
         
         if (next == null)
