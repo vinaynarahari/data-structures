@@ -19,12 +19,34 @@ public class HTMLChecker
     {
         String filename = "src/TagSample1.html";
         Stack<String> tags = new Stack<>();
-        try (Scanner in = new Scanner(new File(filename)))
+        Stack<String> tags1 = new Stack<>();
+
+        try (Scanner in = new Scanner(new File("/Users/vinaynarahari/Desktop/Github/data-structures/Chapter 15 Activities/HTMLChecker/src/TagSample1.html")))
         {
             // Your code goes here
             while (in.hasNext()) {
                 tags.push(in.next());
             }
+            int size = tags.size();
+            
+            for(int i =0 ; i<size/2 ; i++){
+                tags1.push(tags.pop());
+            }
+            System.out.println(tags);
+            System.out.println(tags1);
+            boolean check = false;
+            
+                if(tags.pop().equals("</li>") && tags.pop().equals("<li>")){
+                    if(tags.pop().equals("<ul>") && tags1.pop().equals("</ul>")){
+                        if(tags1.pop().equals("<a>") && tags1.pop().equals("</a>")){
+                            if((tags.pop().equals("<p>") && tags1.pop().equals("</p>"))){
+                                check = true;
+                            }
+                        }
+                    }
+                }
+            System.out.println(check);
+            
             
 
 
