@@ -8,6 +8,17 @@ import java.util.NoSuchElementException;
 */
 public class LinkedList
 {
+    /*
+     * first variable refers to first node in the list
+     * if list is empty,  first will be null
+     */
+    private Node first;
+
+    public LinkedList(){
+        this.first = null; // cuz the linked list empty
+    }
+    
+
 
 
     /**
@@ -21,6 +32,13 @@ public class LinkedList
         Returns the first element in the linked list.
         @return the first element in the linked list
     */
+    public Object getfirst() {
+        if(this.first  == null){
+            throw new  NoSuchElementException();
+        }
+            
+        return this.first.data; 
+    }
 
 
 
@@ -29,6 +47,14 @@ public class LinkedList
         Removes the first element in the linked list.
         @return the removed element
     */
+    public Object removeFirst(){
+        if(this.first == null){
+            throw new NoSuchElementException();
+        }
+        Object element = this.first.data;
+        this.first = this.first.next;
+        return element;
+    }
 
 
 
@@ -39,6 +65,12 @@ public class LinkedList
         @param element the element to add
     */
 
+    public void addFirst(Object add){
+        Node newnode = new Node();
+        newnode.data = add;
+        newnode.next = this.first;
+        this.first = newnode;
+    }
 
 
 
@@ -53,12 +85,30 @@ public class LinkedList
 
 
     //Class Node
+    static class Node {
+        // static class because it doesnt need to access anything in linked list and isnt needed for anything else -- only used by linked lists
+        // since this is an inner class the variables cant be accessed outside of the class anyways so public is okay
+        public Object data;
+        public Node next;
 
 
-    class LinkedListIterator //implements ListIterator
+        
+
+
+    }
+
+    class LinkedListIterator implements ListIterator
     {
       //private data
+        private Node position;
+        private Node previous;
+        private boolean isAfterNext;
 
+        public LinkedListIterator() {
+            position = null;
+            previous = null;
+            isAfterNext = false;
+        }
 
         /**
             Constructs an iterator that points to the front
