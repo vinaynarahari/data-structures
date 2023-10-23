@@ -33,9 +33,8 @@ public class LinkedList
         @return the first element in the linked list
     */
     public Object getfirst() {
-        if(this.first  == null){
-            throw new  NoSuchElementException();
-        }
+        if(this.first  == null) throw new  NoSuchElementException();
+    
             
         return this.first.data; 
     }
@@ -48,9 +47,8 @@ public class LinkedList
         @return the removed element
     */
     public Object removeFirst(){
-        if(this.first == null){
-            throw new NoSuchElementException();
-        }
+        if(this.first == null) throw new NoSuchElementException();
+        
         Object element = this.first.data;
         this.first = this.first.next;
         return element;
@@ -80,7 +78,9 @@ public class LinkedList
         @return an iterator for iterating through this list
     */
 
-
+    public ListIterator listIterator() {
+        return new LinkedListIterator();
+    }
 
 
 
@@ -104,16 +104,16 @@ public class LinkedList
         private Node previous;
         private boolean isAfterNext;
 
+        
+        /**
+            Constructs an iterator that points to the front
+            of the linked list.
+        */
         public LinkedListIterator() {
             position = null;
             previous = null;
             isAfterNext = false;
         }
-
-        /**
-            Constructs an iterator that points to the front
-            of the linked list.
-        */
 
 
         /**
@@ -121,7 +121,19 @@ public class LinkedList
             @return the traversed element
         */
 
+        public Object next(){
 
+            if(!hasNext()) throw new NoSuchElementException();
+
+            previous = position;
+            isAfterNext = true;
+
+            if(position == null) position = first;
+            
+            else position = position.next;
+    
+            return position.data;
+        }
 
 
 
@@ -130,6 +142,12 @@ public class LinkedList
             @return true if there is an element after the iterator position
         */
 
+        public boolean hasNext(){
+            // Check if the list is empty
+            if(position == null) return first != null;
+            return position.next !=null;
+        }
+
 
         /**
             Adds an element before the iterator position
@@ -137,7 +155,23 @@ public class LinkedList
             @param element the element to add
         */
 
-
+        public void add(Object element){
+            // Check if iterator is at the beginning
+            if(position == null){
+                addFirst(element);
+                position = first;
+            
+            }
+            else{
+                Node newNode = new Node();
+                newNode.data = element;
+                newNode.next = position.next;
+                // Set the next elemetn of the current positiion to point to the new node 
+                position.next = newNode;
+                position = newNode;
+            }
+            isAfterNext = false;
+        }
 
 
 
@@ -147,7 +181,21 @@ public class LinkedList
             only be called after a call to the next() method.
         */
 
+        public void remove(){
+            if(!isAfterNext){
+                throw new IllegalStateException();
+            }
 
+            // Check if the iterator is at the beginning
+            if(position == first){
+                removeFirst();
+                position = null;
+            }else{
+                previous.next = position.next;
+                position = previous;
+            }
+            isAfterNext = false;
+        }
 
 
 
@@ -157,7 +205,13 @@ public class LinkedList
             Sets the last traversed element to a different value.
             @param element the element to set
         */
-
+        public void set(Object element){
+            if(!isAfterNext){
+                throw new IllegalStateException();
+            }
+            position.data = element;
+            // dont need to set isafternext to false because the iterator is not going to change its spot like what would happen if you called remove
+        }
 
 
 
