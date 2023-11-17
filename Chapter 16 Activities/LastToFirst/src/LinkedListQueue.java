@@ -27,9 +27,18 @@ public class LinkedListQueue
         if(head == null){
             throw new NoSuchElementException();
         }
-        this.tail.next = head;
         
+        tail.next = head;
+        Node newNode = new Node();
+        newNode = head;
 
+        while(newNode.next != tail){
+            newNode = newNode.next;
+        }
+
+        newNode.next = null;
+        head = tail;
+        tail = newNode;
     }
 
     /**
