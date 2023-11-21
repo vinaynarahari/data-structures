@@ -1,6 +1,8 @@
 import java.util.TreeMap;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 
 public class MorseCode
@@ -69,11 +71,13 @@ public class MorseCode
      * Inserts a letter and its Morse code string into the encoding map
      * and calls treeInsert to insert them into the decoding tree.
      */
+
     private static void addSymbol(char letter, String code)
     {
-        /*
-            !!! INSERT CODE HERE
-        */
+         codeMap.put(letter, code);
+         treeInsert(letter,code);
+
+
     }
 
     /**
@@ -85,9 +89,13 @@ public class MorseCode
      */
     private static void treeInsert(char letter, String code)
     {
-        /*
-            !!! INSERT CODE HERE
-        */
+        if(code.substring(0, 1).equals("-")){
+            decodeTree.getRight();
+        }
+        else if(code.substring(0, 1).equals(".")){
+            decodeTree.getLeft();
+        }
+  
     }
 
     /**
