@@ -97,17 +97,21 @@ public class MorseCode
             if(code.charAt(i) == '.'){
                 if(decodeTree.getLeft() == null){
                     decodeTree.setLeft(new TreeNode(" "));
-                }else{
-                    decodeTree.getLeft().setValue(letter);
                 }
             }else if(code.charAt(i) == '-'){
                 if(decodeTree.getRight() == null){
                     decodeTree.setRight(new TreeNode(" "));
-                }else{
-                    decodeTree.getRight().setValue(letter);
                 }
             }
         }
+
+        if(decodeTree.getLeft() != null){
+            decodeTree.getLeft().setValue(letter);
+        }else  if(decodeTree.getRight() != null){
+            decodeTree.getRight().setValue(letter);
+        }
+
+         
         
         
         /* 
@@ -156,8 +160,25 @@ public class MorseCode
      */
     public static String decode(String morse)
     {
-        System.out.println(morse.length());
         StringBuffer text = new StringBuffer(100);
+        int i =0;
+        while(morse.length() > 0){
+            System.out.println(morse.length());
+            if(morse.charAt(i) == '.'){
+                decodeTree.getLeft();
+            } else if(morse.charAt(i) == '-'){
+                decodeTree.getRight();
+            }else{ 
+                System.out.println("****" + decodeTree.getValue());
+                text.append(decodeTree.getValue());
+                morse = morse.substring(i+1);
+                i = 0;
+            }
+            i++;
+        }
+
+
+        /* 
         while(morse.length() > 0){
             boolean doublespaced = false;
             String morsecode = "";
@@ -202,14 +223,15 @@ public class MorseCode
                         text.append(String.valueOf(key));
                     }
                 }
+        
 
                 morse = "";
             }
-            
+            */ 
            
+             
             
-            
-        }
+        
 
 
         /* 
