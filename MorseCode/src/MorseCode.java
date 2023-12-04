@@ -213,7 +213,7 @@ public class MorseCode
                 System.out.println("here");
                 System.out.println(morseNode.getValue());
                 text.append(morseNode.getValue());
-                morseNode = decodeTree; // Reset to the root for the next character
+                morseNode = decodeTree; 
 
                 
                 if(i + 1 < morse.length() && morse.charAt(i + 1) == ' ') {
@@ -232,7 +232,7 @@ public class MorseCode
                 
                 System.out.println(morseNode.getValue());
                 text.append(morseNode.getValue());
-                morseNode = decodeTree; // Reset to the root for the next character
+                morseNode = decodeTree; 
                 morse = "";
             }
 
