@@ -1,4 +1,7 @@
 import java.util.TreeMap;
+
+//import apple.laf.JRSUIUtils.Tree;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +20,6 @@ public class MorseCode
     public static void main(String[] args)
     {
         MorseCode.start();  
-        System.out.println(MorseCode.encode("Watson come here"));
-       System.out.println("************");
        BTreePrinter.printNode(decodeTree);
     }
 
@@ -92,37 +93,23 @@ public class MorseCode
      */
     private static void treeInsert(char letter, String code)
     {
-        
-        for(int i = 0; i<code.length(); i++){
+        TreeNode newNode = decodeTree;
+
+        for(int i = 0; i< code.length(); i++){
             if(code.charAt(i) == '.'){
-                if(decodeTree.getLeft() == null){
-                    decodeTree.setLeft(new TreeNode(" "));
+                if(newNode.getLeft() == null){
+                    newNode.setLeft(new TreeNode(" "));
                 }
-            }else if(code.charAt(i) == '-'){
-                if(decodeTree.getRight() == null){
-                    decodeTree.setRight(new TreeNode(" "));
+                newNode = newNode.getLeft();
+            } else if(code.charAt(i) == '-'){
+                if(newNode.getRight() == null){
+                    newNode.setRight(new TreeNode(" "));
                 }
+                newNode = newNode.getRight();        
             }
         }
-
-        if(decodeTree.getLeft() != null){
-            decodeTree.getLeft().setValue(letter);
-        }else  if(decodeTree.getRight() != null){
-            decodeTree.getRight().setValue(letter);
-        }
-
-         
+        newNode.setValue(letter);
         
-        
-        /* 
-        
-        if(code.substring(0, 1).equals("-")){
-            decodeTree.getRight();
-        }
-        else if(code.substring(0, 1).equals(".")){
-            decodeTree.getLeft();
-        } */
-  
     }
 
     /**
@@ -158,113 +145,129 @@ public class MorseCode
      * transferred directly into text.
      * Returns the plain text message.
      */
-    public static String decode(String morse)
+
+
+
+
+    /*public static String decode(String morse)
     {
+        TreeNode morseNode = decodeTree;
         StringBuffer text = new StringBuffer(100);
         int i =0;
+        boolean check = false;
         while(morse.length() > 0){
-            System.out.println(morse.length());
+            
+            System.out.println(morse);
+            System.out.println(i);
+            
             if(morse.charAt(i) == '.'){
-                decodeTree.getLeft();
+                morseNode= morseNode.getLeft();
             } else if(morse.charAt(i) == '-'){
-                decodeTree.getRight();
-            }else{ 
-                System.out.println("****" + decodeTree.getValue());
-                text.append(decodeTree.getValue());
-                morse = morse.substring(i+1);
+                morseNode = morseNode.getRight();
+            }else if(morse.charAt(i) == ' '){
+                if(morse.charAt(i+1) == ' '){
+                    check = true;
+                }
+                text.append(morseNode.getValue());
+                morseNode = decodeTree;
+                if(check){
+                    i++;
+                     text.append(" ");
+                     check = false;
+                    morse = morse.substring(i+1);
+                }else{
+                    morse = morse.substring(i+1);
+                }
                 i = 0;
+                
             }
-            i++;
+
+            
+          i++;
         }
+           
+        
+        System.out.println(text.toString());
+        return text.toString();
+    }*/
+    public static String decode(String morse) {
+        TreeNode morseNode = decodeTree;
+        StringBuilder text = new StringBuilder();
+        boolean check = false;
+        int i =0;
 
+        
+        while(i < morse.length()) {
+            System.out.println(i);
+            System.out.println(morse.length());
+            System.out.println(" ***  " + morse);
+            if (morse.charAt(i) == '.') {
+                morseNode = morseNode.getLeft();
+                i++;
+                System.out.println("********** " + i);
+            } else if (morse.charAt(i) == '-') {
+                morseNode = morseNode.getRight();
+                i++;
+            }
+            else if (morse.charAt(i) == ' ') {
+                System.out.println("here");
+                System.out.println(morseNode.getValue());
+                text.append(morseNode.getValue());
+                morseNode = decodeTree; // Reset to the root for the next character
 
-        /* 
-        while(morse.length() > 0){
-            boolean doublespaced = false;
-            String morsecode = "";
-            int g = 0;
-            while (g < morse.length() && (morse.charAt(g) != ' ' && g != morse.length() - 1)) {
-                g++;
+                
+                if(i + 1 < morse.length() && morse.charAt(i + 1) == ' ') {
+                    text.append(" ");
+                    i++;
+                    morse = morse.substring(i+1);   
+                }else{
+                    morse = morse.substring(i+1);
+                    System.out.println(morse);
+                }
+                i =0;
                 
             }
-            if (g < morse.length() && g + 1 < morse.length() && morse.charAt(g+1) == ' '){
-                doublespaced = true;
-            }
 
-
-            
-
-            
-            if (g + 1 < morse.length()) {
-                morsecode = morse.substring(0, g);
-                System.out.println(g);
-                System.out.println(morse.length());
-                morse = morse.substring(g + 1);
-                System.out.println(morse);
-            } 
-                Set<Character> keys  = codeMap.keySet();
+            if( i == morse.length()){
                 
-                for(Character key: keys){
-                    if(codeMap.get(key).equals(morsecode)){
-                        text.append(String.valueOf(key));
-                    }
-                }
-
-            if(doublespaced == true){
-                text.append(" ");
-            }
-        
-            if(morse.length() == 1){
-                System.out.println(keys);
-
-                for(Character key: keys){
-                    if(codeMap.get(key).equals(morse.substring(0,1))){
-                        System.out.print("here");
-                        text.append(String.valueOf(key));
-                    }
-                }
-        
-
+                System.out.println(morseNode.getValue());
+                text.append(morseNode.getValue());
+                morseNode = decodeTree; // Reset to the root for the next character
                 morse = "";
             }
-            */ 
+
+            if(morse.length() ==1){
+                morseNode = decodeTree;
+                if (morse.charAt(0) == '.') {
+                    morseNode = morseNode.getLeft();
            
-             
-            
-        
-
-
-        /* 
-        TreeNode copy = decodeTree;
-        StringBuffer text = new StringBuffer(100);
-        for(int i = 0; i< morse.length(); i++){
-            System.out.println(decodeTree.getRight().getValue());
-                if(morse.substring(i, i+1).equals(".")){
-                    if(decodeTree.getLeft() == null){
-                        System.out.println(decodeTree.getValue());;
-                        text.append(decodeTree.getValue());
-                    }else{
-                        decodeTree.getLeft();
-                    }
+                } else if (morse.charAt(0) == '-') {
+                    morseNode = morseNode.getRight();
                 }
-                if(morse.substring(i, i+1).equals("-")){
-                    if(decodeTree.getRight() == null){
-                        text.append(decodeTree.getValue());
-                    }else{
-                        decodeTree.getRight();
-                    }
-                }else if(morse.substring(i, i+1).equals(" ")){
-                    morse.substring(i+1, morse.length());
-                }
-                i++;
+                text.append(morseNode.getValue());
+                morse = "";
+            }
+                
         }
 
-        */
-        
 
-        return text.toString();
+
+
+         return text.toString();
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * BTreePrinter class courtesy of Karen Ge (@karenge1)
@@ -355,4 +358,3 @@ class BTreePrinter {
         return true;
     }
 }
-
